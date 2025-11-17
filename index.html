@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Velvete Beauty</title>
+  <meta name="description" content="Velvete Beauty - premium skincare & cosmetics" />
+  <meta name="theme-color" content="#0f0c29" />
+
+  <!-- Fonts (use Google or local) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand-dark:#0f0c29;
+      --brand-deep:#302b63;
+      --accent:#ff7b29;
+      --muted:#f2e9e6;
+      --text:#fff;
+      --max-width:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+    a{text-decoration:none;color:inherit}
+
+    /* ---------- NAVBAR (DARK) ---------- */
+    .topbar {
+      background: linear-gradient(#fff);
+      color:var(--text);
+      position:sticky;
+      top:0;
+      z-index:999;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    }
+    .nav {
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 20px;
+    }
+    .brand {
+      display:flex; gap:12px; align-items:center;
+    }
+    .brand img{height:44px; width:auto;}
+    .brand .title {font-weight:800; font-size:1.1rem; color:#1b1330; letter-spacing:0.6px;}
+
+    .nav-left {display:flex; gap:8px; align-items:center;}
+    .nav-right {display:flex; gap:12px; align-items:center;}
+
+    /* Main menu */
+    .menu {
+      display:flex; gap:18px; align-items:center;
+      list-style:none; margin:0;padding:0;
+    }
+    .menu > li {position:relative}
+    .menu > li > a { color:#1b1330; font-weight:600; padding:8px 6px; display:inline-block; }
+    .menu > li:hover > a { opacity:0.95; transform:translateY(-1px); }
+
+    /* dropdown */
+    .dropdown {
+      position:absolute;
+      left:0; top:100%;
+      min-width:200px;
+      background:#fff;
+      color:#111;
+      border-radius:8px;
+      padding:10px 8px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      display:none;
+    }
+    .menu > li:hover .dropdown { display:block; }
+    .dropdown a { display:block; padding:8px 10px; color:#333; border-radius:6px; }
+    .dropdown a:hover { background:#f6f6f6; }
+
+    /* icons */
+    .icon-btn {
+      background:transparent; border:none; color:var(--text); cursor:pointer;
+      display:inline-flex; align-items:center; gap:8px; font-weight:600;
+    }
+
+    /* responsive hamburger */
+    .hamburger { display:none; background:transparent; border:none; color:var(--text); cursor:pointer; }
+    .mobile-menu { display:none; }
+
+    /* ---------- HERO (full screen) ---------- */
+    .hero-banner {
+      position:relative;
+      width:100%;
+      height:100vh;
+      overflow:hidden;
+    }
+    .hero-banner .hero-bg {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+      filter:contrast(1.02) saturate(1.02);
+    }
+    .hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(90deg, rgba(12,10,20,0.35), rgba(48,43,99,0.20));
+      z-index:2;
+    }
+    .hero-inner {
+      position:absolute; left:6%; top:50%; transform:translateY(-50%); z-index:3;
+      color:var(--text); max-width:620px;
+    }
+    .hero-title {
+      font-size:clamp(2rem,5vw,4rem);
+      font-weight:800; margin:0 0 12px; line-height:1.02;
+      letter-spacing: -0.02em;
+    }
+    .hero-sub { font-size:1.05rem; opacity:0.92; margin-bottom:18px; color:rgba(255,255,255,0.95) }
+    .hero-cta { display:inline-block; padding:12px 26px; background:var(--accent); color:#fff; border-radius:999px; font-weight:700; box-shadow:0 10px 30px rgba(255,123,41,0.2); }
+    .hero-cta:hover { transform:translateY(-2px); }
+
+    /* small overlay right ribbon (promo) */
+    .ribbon {
+      position:absolute; right:8%; top:10%;
+      background:linear-gradient(180deg,#fff, #ffe8d7);
+      color:#3b2e2e;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:700;
+      z-index:4;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    /* ---------- CONTENT (centered container) ---------- */
+    .container { max-width:var(--max-width); margin:0 auto; padding:48px 20px; }
+
+    /* Best seller grid */
+    .section-title { font-size:1.6rem; font-weight:800; margin:0 0 18px; color:#2b2b2b; }
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; }
+    .card {
+      background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.06);
+      display:flex; flex-direction:column;
+    }
+    .card img { width:100%; height:220px; object-fit:cover; display:block; }
+    .card-body { padding:14px; display:flex; flex-direction:column; gap:8px; flex:1 }
+    .card h3{ margin:0; font-size:1rem; font-weight:700; color:#2f2f2f }
+    .card p{ margin:0; color:#666; font-size:0.95rem }
+    .card .price { margin-top:auto; font-weight:800; color:var(--brand-deep) }
+    .card .add { margin-top:8px; background:var(--accent); color:#fff; padding:10px 12px; border-radius:10px; text-align:center; display:inline-block; }
+
+    /* auto-scrolling gallery */
+    .scroll-gallery {
+      display:flex; gap:12px; overflow:hidden; padding:18px 0;
+      align-items:center;
+    }
+    .scroll-track { display:flex; gap:12px; animation:scroll 30s linear infinite; }
+    .gallery-item { flex:0 0 220px; height:140px; border-radius:12px; overflow:hidden; box-shadow:0 8px 22px rgba(0,0,0,0.08) }
+    .gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+    @keyframes scroll {
+      0% { transform:translateX(0); }
+      100% { transform:translateX(-50%); }
+    }
+
+    /* testimonials */
+    .test-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
+    .test-card { background:#fff; border-radius:12px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,0.06); }
+    .test-card p{ margin:0; color:#444 }
+
+    /* footer */
+    footer.footer {
+      background: linear-gradient(90deg,#1b1330,#1f1a3b);
+      color:#fff; padding:40px 20px;
+    }
+
+    /* floating cart */
+    .cart-float {
+      position:fixed; right:20px; bottom:20px; z-index:999; background:var(--accent); color:#fff; padding:12px 14px; border-radius:999px; box-shadow:0 8px 26px rgba(0,0,0,0.25);
+      display:flex; gap:12px; align-items:center; cursor:pointer;
+    }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width:980px){
+      .menu { display:none; }
+      .hamburger { display:inline-block; }
+      .mobile-menu { display:none; position:fixed; inset:0; background:rgba(12,10,20,0.9); z-index:999; padding:60px 20px; overflow:auto; }
+      .mobile-menu.open { display:block; }
+      .mobile-menu a { display:block; padding:12px 0; color:#fff; border-bottom:1px solid rgba(255,255,255,0.04) }
+      .hero-inner { left:6%; right:6%; max-width:none; text-align:left }
+      .ribbon { display:none; }
+
+      .hero-overlay { background: linear-gradient(180deg, rgba(12,10,20,0.4), rgba(48,43,99,0.30)); }
+      .hero-inner { padding-right:24px; }
+    }
+
+    @media (max-width:600px){
+      .hero-title { font-size:2rem }
+      .hero-sub { font-size:0.95rem }
+      .card img { height:180px }
+      .gallery-item { flex:0 0 160px }
+    }
+	
+	/* Arrows visible only on mobile */
+	.mobile-arrows {
+	  display: none;
+	}
+
+	@media (max-width: 768px) {
+	  .mobile-arrows {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 5px;
+		margin-bottom: 10px;
+	  }
+
+	  .arrow-btn {
+		background: #ff7b29;
+		color: #fff;
+		border: none;
+		font-size: 24px;
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+	  }
+
+	  .arrow-btn:active {
+		transform: scale(0.95);
+	  }
+
+	  /* Horizontal mobile scroll styling */
+	  .product-grid {
+		display: flex !important;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .product-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-grid .card {
+    flex: 0 0 65%;  /* shows 1.5 cards at a time */
+    max-width: 220px;
+    scroll-snap-align: start;
+  }
+
+  .product-grid .card img {
+    height: 160px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <div class="topbar" role="navigation" aria-label="Main">
+    <div class="nav">
+      <div class="nav-left">
+        <div class="brand">
+          <!-- Replace with your logo -->
+          <img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\logo.png" alt="Velvete Beauty logo" onerror="this.style.display='none'">
+          <div class="title">Velvete Beauty</div>
+        </div>
+      </div>
+
+      <ul class="menu" role="menubar" aria-label="Primary menu">
+        <li><a href="#home">Home</a></li>
+
+        <li>
+          <a href="#products" aria-haspopup="true">Beauty Products ▾</a>
+          <div class="dropdown" role="menu" aria-hidden="true">
+            <a href="#face">Face Care</a>
+            <a href="#makeup">Makeup</a>
+            <a href="#skincare">Skincare Kits</a>
+          </div>
+        </li>
+
+
+        <li><a href="#hair">Hair Accessories</a></li>
+        <li><a href="#about">About Us</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="hamburger" aria-label="Menu" id="hamburgerBtn">☰</button>
+
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button class="icon-btn" aria-label="Search" id="searchBtn">🔍</button>
+          <button class="icon-btn" aria-label="Account" id="accountBtn">👤</button>
+          <button class="icon-btn" aria-label="Cart" id="cartBtn">🛒 <span id="cartCount" style="background:#fff;color:#000;border-radius:999px;padding:2px 6px;margin-left:6px;font-weight:700">0</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU (full screen) -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <button id="closeMobile" style="background:transparent;border:none;color:#000;font-size:1.2rem;margin-bottom:18px">✕ Close</button>
+    <a href="#home">Home</a>
+    <a href="#products">Beauty Products</a>
+    <a href="#bangles">Bangles Collection</a>
+    <a href="#jewellery">Imitation Jewellery</a>
+    <a href="#hair">Hair Accessories</a>
+    <a href="#about">About Us</a>
+  </div>
+
+  <!-- HERO -->
+  <header id="home" class="hero-banner" role="banner" aria-label="Hero">
+    <img class="hero-bg" src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\hero2.png" alt="Fresh & Clean Skincare - Velvete Beauty">
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-title">Fresh &amp; Clean Skincare</div>
+      <div class="hero-sub">Discover gentle cleansers and refreshing routines for glowing, healthy skin.</div>
+      <a class="hero-cta" href="#product-container">Shop Now</a>
+    </div>
+
+    <div class="ribbon">5% Off on orders ₹2,000+</div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+
+    <!-- Best seller -->
+    <section class="container" id="product-container" aria-label="Best Sellers">
+      <h2 class="section-title">Best Sellers</h2>
+	  <div class="mobile-arrows">
+		<button class="arrow-btn left" onclick="scrollProducts(-1)">‹</button>
+		<button class="arrow-btn right" onclick="scrollProducts(1)">›</button>
+	  </div>
+
+      <div class="product-grid" id="bestSellers">
+        <!-- Card 1 -->
+        <article class="card">
+          <img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product1.JPEG" alt="Face Cleanser">
+          <div class="card-body">
+            <h3>Gentle Face Cleanser</h3>
+            <p>Foaming cleanser that removes impurities yet keeps skin hydrated.</p>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div class="price">₹299</div>
+              <a class="add" href="#" onclick="addToCart(101,'Gentle Face Cleanser',299,'C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product1.JPEG');return false;">Add to cart</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product2.JPEG" alt="Hydrating Serum">
+          <div class="card-body">
+            <h3>Hydrating Serum</h3>
+            <p>Lightweight serum for instant glow and long-lasting hydration.</p>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div class="price">₹499</div>
+              <a class="add" href="#" onclick="addToCart(102,'Hydrating Serum',499,'C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product2.JPEG');return false;">Add to cart</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product3.JPEG" alt="Moisturizer">
+          <div class="card-body">
+            <h3>Daily Moisturizer</h3>
+            <p>Non-greasy moisturizer that protects and softens skin.</p>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div class="price">₹399</div>
+              <a class="add" href="#" onclick="addToCart(103,'Daily Moisturizer',399,'C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product3.JPEG');return false;">Add to cart</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card">
+          <img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product4.JPEG" alt="Lipstick">
+          <div class="card-body">
+            <h3>Velvete Lipstick</h3>
+            <p>Long-lasting color with a satin finish.</p>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div class="price">₹349</div>
+              <a class="add" href="#" onclick="addToCart(104,'Velvete Lipstick',349,'C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product4.JPEG');return false;">Add to cart</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Scrolling gallery -->
+    <section class="container" aria-label="Customize with Love">
+      <h2 class="section-title">Customize with Love: Our Top Picks</h2>
+      <div class="scroll-gallery" aria-hidden="false">
+        <div class="scroll-track" id="scrollTrack">
+          <!-- duplicated set so animation loops smoothly -->
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product4.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product43.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product14.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product25.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product6.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product7.JPEG" alt=""></div>
+
+          <!-- duplicate -->
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product4.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product43.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product14.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product25.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product6.jpeg" alt=""></div>
+          <div class="gallery-item"><img src="C:\Users\Sakthivel\Desktop\PSP_Projects\VB\images\product7.JPEG" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="container" id="about" aria-label="Testimonials">
+      <h2 class="section-title">Customer Praise & Testimonials</h2>
+      <div class="test-grid">
+        <div class="test-card">
+          <p>"Amazing products — gentle and effective. My skin looks calmer and brighter!"</p>
+          <div style="margin-top:10px;font-weight:700;color:#555">— Gomathi R</div>
+        </div>
+        <div class="test-card">
+          <p>"Loved the packaging and fresh smell. Delivery was fast and safe."</p>
+          <div style="margin-top:10px;font-weight:700;color:#555">— Rajesh K</div>
+        </div>
+        <div class="test-card">
+          <p>"My go-to gift for friends — everyone asks where I got it from!"</p>
+          <div style="margin-top:10px;font-weight:700;color:#555">— Ramalingam A</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FLOATING CART -->
+  <div class="cart-float" id="cartFloat" role="button" aria-label="Open cart" onclick="openCart()">
+    <strong>🛒</strong>
+    <div>
+      <div style="font-weight:700" id="cartFloatCount">0 items</div>
+      <div style="font-size:0.85rem">View Cart</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" aria-label="Footer">
+    <div class="container" style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;">
+      <div style="max-width:420px">
+        <h3 style="margin:0 0 8px;color:#fff">Velvete Beauty</h3>
+        <p style="color:rgba(255,255,255,0.85)">Premium skincare & cosmetics — crafted with care. Pre-order 48 hrs for fresh delivery.</p>
+      </div>
+
+      <div style="min-width:160px">
+        <h4 style="margin:0 0 8px;color:#fff">Contact</h4>
+        <p style="margin:0;color:rgba(255,255,255,0.85)">📞 9566167611</p>
+        <p style="margin:0;color:rgba(255,255,255,0.85)">✉️ velvetebeautyonline@gmail.com</p>
+      </div>
+
+      <div style="min-width:180px">
+        <h4 style="margin:0 0 8px;color:#fff">Follow Us</h4>
+        <div style="display:flex;gap:8px">
+          <a href="#" style="color:#fff">Instagram</a>
+          <a href="#" style="color:#fff">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:28px;color:rgba(255,255,255,0.75)">© 2025 Velvete Beauty. All rights reserved.</div>
+  </footer>
+
+  <!-- Simple Cart Modal (light) -->
+  <div id="cartModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:12px;padding:20px;max-width:520px;width:92%;">
+      <h3>Your Cart</h3>
+      <div id="cartList"></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:12px;">
+        <button onclick="closeCart()" style="padding:8px 12px;border-radius:8px;border:1px solid #ccc;background:#fff">Close</button>
+        <button onclick="checkout()" style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    /* MOBILE MENU */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMobile = document.getElementById('closeMobile');
+
+    hamburgerBtn.addEventListener('click', ()=> {
+      mobileMenu.classList.toggle('open');
+      mobileMenu.setAttribute('aria-hidden', mobileMenu.classList.contains('open') ? 'false' : 'true');
+    });
+    closeMobile.addEventListener('click', ()=> {
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden','true');
+    });
+
+    /* Simple cart (local storage) */
+    function getCart(){ return JSON.parse(localStorage.getItem('velvete_cart')||'[]'); }
+    function saveCart(c){ localStorage.setItem('velvete_cart', JSON.stringify(c)); updateCartUI(); }
+
+    function addToCart(id,name,price,image){
+      const cart = getCart();
+      const found = cart.find(i=>i.id===id);
+      if(found){ found.qty += 1; } else { cart.push({id,name,price,qty:1,image}); }
+      saveCart(cart);
+      alert(name + ' added to cart');
+    }
+    function updateCartUI(){
+      const cart = getCart();
+      const count = cart.reduce((s,i)=>s+i.qty,0);
+      document.getElementById('cartCount').textContent = count;
+      document.getElementById('cartFloatCount').textContent = count + ' items';
+    }
+    updateCartUI();
+
+    function openCart(){
+      const modal = document.getElementById('cartModal');
+      const list = document.getElementById('cartList');
+      const cart = getCart();
+      if(cart.length===0){ list.innerHTML = '<p>Your cart is empty.</p>'; } else {
+        list.innerHTML = cart.map(it => '<div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;"><img src="'+it.image+'" style="width:64px;height:64px;object-fit:cover;border-radius:8px"><div><strong>'+it.name+'</strong><div>Qty: '+it.qty+' • ₹'+(it.price*it.qty)+'</div></div></div>').join('');
+      }
+      modal.style.display = 'flex';
+    }
+    function closeCart(){ document.getElementById('cartModal').style.display = 'none'; }
+
+    function checkout(){
+      alert('Checkout flow placeholder — integrate gateway here.');
+    }
+
+    /* Auto-scroll gallery pause on hover */
+    const scrollTrack = document.getElementById('scrollTrack');
+    const gallery = scrollTrack.parentElement;
+    gallery.addEventListener('mouseenter', ()=> { scrollTrack.style.animationPlayState = 'paused'; });
+    gallery.addEventListener('mouseleave', ()=> { scrollTrack.style.animationPlayState = 'running'; });
+
+    /* Ensure scroll animation width fits (duplicate items for loop) */
+    // no-op; items duplicated in markup for smooth loop. For large sets, duplicate via JS if needed.
+
+    /* Accessibility: close mobile menu on link click */
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> {
+      mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true');
+    }));
+
+    /* small polyfills and fallbacks */
+    window.addEventListener('load', ()=> {
+      // ensure hero image is present; fallback to color if missing
+      const heroBg = document.querySelector('.hero-bg');
+      heroBg.onerror = () => {
+        document.querySelector('.hero-banner').style.background = 'linear-gradient(90deg,#f9d6d1,#fff6ee)';
+        heroBg.style.display = 'none';
+      };
+    });
+	
+	function scrollProducts(direction) {
+	  const container = document.getElementById("bestSellers");
+	  const scrollAmount = container.offsetWidth * 0.7; // scroll 70% of screen
+
+	  container.scrollBy({
+		left: direction * scrollAmount,
+		behavior: "smooth"
+	  });
+	}
+
+
+  </script>
+</body>
+</html>
